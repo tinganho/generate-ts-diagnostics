@@ -29,7 +29,12 @@ export interface DiagnosticMessages {
 }`;
 
     for (let prop of props) {
+        // Don't treat message.
+        if (prop.name === 'message') {
+            continue;
+        }
         diagnosticsText += 'export interface DiagnosticMessage {';
+        diagnosticsText += '    message: string';
         diagnosticsText += `    ${prop.name}${prop.optional ? '?' : ''}:${prop.type}`;
         diagnosticsText += '}\n\n';
     }
@@ -39,17 +44,18 @@ export interface DiagnosticMessages {
         let length = Object.keys(json).length;
         let index = 0;
 
-        for (let error in json) {
+        for (let message in json) {
             diagnosticsText += 'var diagnosticMessages: DiagnosticMessage = {'
             diagnosticsText += '    ' +
-                error.replace(/\s+/g, '_')
+                message.replace(/\s+/g, '_')
                 .replace(/['"\.,]/g, '')
                 .replace(/{(\d)}/g, '$1');
 
             diagnosticsText += ': {\n';
-            diagnosticsText += '        message: \'' + error + '\',\n';
-            diagnosticsText += '        status: ' + json[error].status + ',\n';
-            diagnosticsText += '        code: ' + json[error].code + '\n';
+            diagnosticsText += '        message: \'' + message + '\',\n';
+            for (let prop of props) {
+                diagnosticsText += `        ${prop.name}: ' + json[error]['${prop.name}'] + ',\n`;
+            }
             diagnosticsText += '    }';
             if (index < length - 1) {
                 diagnosticsText += ',\n';
