@@ -1,0 +1,24 @@
+{
+  "name": "generate-ts-diagnostics",
+  "version": "1.0.0",
+  "description": "Generate TypeScript Diagnostics from JSON.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tinganho/generate-ts-diagnostics.git"
+  },
+  "keywords": [
+    "gulp",
+    "task",
+    "typescript"
+  ],
+  "author": "Tingan Ho",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tinganho/generate-ts-diagnostics/issues"
+  },
+  "homepage": "https://github.com/tinganho/generate-ts-diagnostics#readme"
+}
