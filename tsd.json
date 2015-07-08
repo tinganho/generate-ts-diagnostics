@@ -22,6 +22,9 @@
     },
     "gulp/gulp.d.ts": {
       "commit": "304a25197990aeabf8e9fd030ad927ed011b9e83"
+    },
+    "gulp-rename/gulp-rename.d.ts": {
+      "commit": "304a25197990aeabf8e9fd030ad927ed011b9e83"
     }
   }
 }

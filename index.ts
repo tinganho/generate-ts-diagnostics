@@ -23,27 +23,34 @@ export = function(props: MessageProperty[]) {
         throw new PluginError(PLUGIN_NAME, 'Missing properties argument');
     }
 
-    let diagnosticsText = `
-export interface DiagnosticMessages {
-    [diagnostic: string]: DiagnosticMessage;
-}\n\n`;
-
-    diagnosticsText += 'export interface DiagnosticMessage {\n';
-    diagnosticsText += '    message: string;\n';
-    for (let i in props) {
-        // Don't treat message.
-        if (props[i].name === 'message') {
-            props.splice(i, 1);
-            continue;
-        }
-        diagnosticsText += `    ${props[i].name}${props[i].optional ? '?' : ''}: ${props[i].type};\n`;
-    }
-    diagnosticsText += '}\n\n';
-
     let stream = through.obj(function(file, encoding, next) {
         let json = JSON.parse(file.contents);
         let length = Object.keys(json).length;
         let index = 0;
+
+        let diagnosticsText = '\nexport interface DiagnosticMessages {\n';
+        for (let message in json) {
+            diagnosticsText += '    ' +
+                message.replace(/\s+/g, '_')
+                    .replace(/['"\.,]/g, '')
+                    .replace(/{(\d)}/g, '$1');
+            diagnosticsText += ': DiagnosticMessage;\n';
+        }
+        diagnosticsText += '    [diagnostic: string]: DiagnosticMessage;\n';
+        diagnosticsText += '}\n\n';
+
+        diagnosticsText += 'export interface DiagnosticMessage {\n';
+        diagnosticsText += '    message: string;\n';
+        for (let i in props) {
+            // Don't treat message.
+            if (props[i].name === 'message') {
+                props.splice(i, 1);
+                continue;
+            }
+            diagnosticsText += `    ${props[i].name + (props[i].optional ? '?' : '')}: ${props[i].type};\n`;
+        }
+        diagnosticsText += '}\n\n';
+
 
         diagnosticsText += 'export var Diagnostics: DiagnosticMessages = {\n';
         for (let message in json) {

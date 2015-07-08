@@ -5,3 +5,4 @@
 /// <reference path="chalk/chalk.d.ts" />
 /// <reference path="vinyl/vinyl.d.ts" />
 /// <reference path="gulp/gulp.d.ts" />
+/// <reference path="gulp-rename/gulp-rename.d.ts" />
