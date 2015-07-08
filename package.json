@@ -1,6 +1,6 @@
 {
   "name": "gulp-generate-ts-diagnostics",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Gulp task for generating TypeScript diagnostics from JSON.",
   "main": "built/index.js",
   "scripts": {

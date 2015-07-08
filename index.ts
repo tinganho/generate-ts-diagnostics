@@ -26,30 +26,31 @@ export = function(props: MessageProperty[]) {
     let diagnosticsText = `
 export interface DiagnosticMessages {
     [diagnostic: string]: DiagnosticMessage;
-}`;
+}\n\n`;
 
-    for (let prop of props) {
+    diagnosticsText += 'export interface DiagnosticMessage {';
+    diagnosticsText += '    message: string';
+    for (let i in props) {
         // Don't treat message.
-        if (prop.name === 'message') {
+        if (props[i].name === 'message') {
+            props.splice(i, 1);
             continue;
         }
-        diagnosticsText += 'export interface DiagnosticMessage {';
-        diagnosticsText += '    message: string';
-        diagnosticsText += `    ${prop.name}${prop.optional ? '?' : ''}:${prop.type}`;
-        diagnosticsText += '}\n\n';
+        diagnosticsText += `    ${props[i].name}${props[i].optional ? '?' : ''}:${props[i].type}`;
     }
+    diagnosticsText += '}\n\n';
 
     let stream = through.obj(function(file, encoding, next) {
         let json = JSON.parse(file.contents);
         let length = Object.keys(json).length;
         let index = 0;
 
+        diagnosticsText += 'var diagnosticMessages: DiagnosticMessage = {\n';
         for (let message in json) {
-            diagnosticsText += 'var diagnosticMessages: DiagnosticMessage = {'
             diagnosticsText += '    ' +
                 message.replace(/\s+/g, '_')
-                .replace(/['"\.,]/g, '')
-                .replace(/{(\d)}/g, '$1');
+                    .replace(/['"\.,]/g, '')
+                    .replace(/{(\d)}/g, '$1');
 
             diagnosticsText += ': {\n';
             diagnosticsText += '        message: \'' + message + '\',\n';
