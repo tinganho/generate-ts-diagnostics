@@ -45,7 +45,7 @@ export interface DiagnosticMessages {
         let length = Object.keys(json).length;
         let index = 0;
 
-        diagnosticsText += 'var diagnosticMessages: DiagnosticMessage = {\n';
+        diagnosticsText += 'var diagnosticMessages: DiagnosticMessages = {\n';
         for (let message in json) {
             diagnosticsText += '    ' +
                 message.replace(/\s+/g, '_')
@@ -60,7 +60,6 @@ export interface DiagnosticMessages {
             diagnosticsText += '    },\n';
             index++;
         }
-        diagnosticsText += '\n';
         diagnosticsText += '}\n\n';
 
         diagnosticsText += 'export default diagnosticMessages;\n';
