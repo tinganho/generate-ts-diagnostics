@@ -4,6 +4,7 @@
 .gitattributes
 .editorconfig
 index.ts
+test
 tsconfig.json
 tsd.json
 typings/

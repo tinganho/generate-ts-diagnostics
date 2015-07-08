@@ -5,7 +5,7 @@
     },
 
 
-    "Missing argument {0}.": {
+    "Missing argument '{0}'.": {
         "status": 400,
         "code": 2000
     },

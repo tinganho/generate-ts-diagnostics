@@ -4,5 +4,8 @@
         "outDir": "built",
         "rootDir": ".",
         "noImplicitAny": true
-    }
+    },
+    "exclude": [
+        "node_modules"
+    ]
 }

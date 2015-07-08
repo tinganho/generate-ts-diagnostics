@@ -50,7 +50,7 @@ export = function(props: MessageProperty[]) {
                     .replace(/{(\d)}/g, '$1');
 
             diagnosticsText += ': {\n';
-            diagnosticsText += '        message: \'' + message + '\',\n';
+            diagnosticsText += '        message: \'' + message.replace(/(['"])/g, '\\$1') + '\',\n';
             for (let prop of props) {
                 diagnosticsText += `        ${prop.name}:  ${json[message][prop.name]},\n`;
             }

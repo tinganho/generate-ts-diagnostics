@@ -12,7 +12,7 @@ export var Diagnostics = {
         code:  1000,
     },
     Missing_argument_0: {
-        message: 'Missing argument {0}.',
+        message: 'Missing argument \'{0}\'.',
         status:  400,
         code:  2000,
     },
