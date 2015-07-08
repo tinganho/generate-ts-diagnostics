@@ -36,7 +36,7 @@ export interface DiagnosticMessages {
             props.splice(i, 1);
             continue;
         }
-        diagnosticsText += `    ${props[i].name}${props[i].optional ? '?' : ''}:${props[i].type}`;
+        diagnosticsText += `    ${props[i].name}${props[i].optional ? '?' : ''}:${props[i].type};\n`;
     }
     diagnosticsText += '}\n\n';
 
@@ -55,12 +55,9 @@ export interface DiagnosticMessages {
             diagnosticsText += ': {\n';
             diagnosticsText += '        message: \'' + message + '\',\n';
             for (let prop of props) {
-                diagnosticsText += `        ${prop.name}: ' + json[error]['${prop.name}'] + ',\n`;
+                diagnosticsText += `        ${prop.name}:  ${json[message][prop.name]},\n`;
             }
-            diagnosticsText += '    }';
-            if (index < length - 1) {
-                diagnosticsText += ',\n';
-            }
+            diagnosticsText += '    },\n';
             index++;
         }
         diagnosticsText += '\n';
