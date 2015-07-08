@@ -1,6 +1,6 @@
 {
-  "name": "generate-ts-diagnostics",
-  "version": "0.1.2",
+  "name": "gulp-generate-ts-diagnostics",
+  "version": "0.1.0",
   "description": "Gulp task for generating TypeScript diagnostics from JSON.",
   "main": "built/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tinganho/generate-ts-diagnostics.git"
+    "url": "git+https://github.com/tinganho/gulp-generate-ts-diagnostics.git"
   },
   "keywords": [
     "gulp",
@@ -18,9 +18,9 @@
   "author": "Tingan Ho",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tinganho/generate-ts-diagnostics/issues"
+    "url": "https://github.com/tinganho/gulp-generate-ts-diagnostics/issues"
   },
-  "homepage": "https://github.com/tinganho/generate-ts-diagnostics#readme",
+  "homepage": "https://github.com/tinganho/gulp-generate-ts-diagnostics#readme",
   "dependencies": {
     "gulp-util": "^3.0.6",
     "through2": "^2.0.0"
