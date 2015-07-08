@@ -10,44 +10,58 @@ import * as gutil from 'gulp-util';
 
 let PluginError = gutil.PluginError;
 
-interface Option {
-    rootDir: string;
+const PLUGIN_NAME = 'gulp-generate-ts-diagnostics';
+
+interface MessageProperty {
+    name: string;
+    type: string;
+    optional?: boolean;
 }
 
-export default function(dest: any) {
-    var stream = through.obj(function(file, encoding, next) {
-        if (file.isBuffer()) {
-            this.emit('error', new PluginError('gulp-prefixer', 'Buffers not supported!'));
-            return next();
-        }
+export = function(props: MessageProperty[]) {
+    if (!props || props.length === 0) {
+        throw new PluginError(PLUGIN_NAME, 'Missing properties argument');
+    }
 
-        if (file.isStream()) {
-            let json = JSON.parse(file.contents);
-            let diagnosticsText = 'export default {\n';
-            let length = Object.keys(json).length;
-            let index = 0;
+    let diagnosticsText = `
+export interface DiagnosticMessages {
+    [diagnostic: string]: DiagnosticMessage;
+}`;
 
-            for (var error in json) {
-                diagnosticsText += '    ' +
-                    error.replace(/\s+/g, '_')
-                    .replace(/['"\.,]/g, '')
-                    .replace(/{(\d)}/g, '$1');
+    for (let prop of props) {
+        diagnosticsText += 'export interface DiagnosticMessage {';
+        diagnosticsText += `    ${prop.name}${prop.optional ? '?' : ''}:${prop.type}`;
+        diagnosticsText += '}\n\n';
+    }
 
-                diagnosticsText += ': {\n';
-                diagnosticsText += '        message: \'' + error + '\',\n';
-                diagnosticsText += '        status: ' + json[error].status + ',\n';
-                diagnosticsText += '        code: ' + json[error].code + '\n';
-                diagnosticsText += '    }';
-                if (index < length - 1) {
-                    diagnosticsText += ',\n';
-                }
-                index++;
+    let stream = through.obj(function(file, encoding, next) {
+        let json = JSON.parse(file.contents);
+        let length = Object.keys(json).length;
+        let index = 0;
+
+        for (let error in json) {
+            diagnosticsText += 'var diagnosticMessages: DiagnosticMessage = {'
+            diagnosticsText += '    ' +
+                error.replace(/\s+/g, '_')
+                .replace(/['"\.,]/g, '')
+                .replace(/{(\d)}/g, '$1');
+
+            diagnosticsText += ': {\n';
+            diagnosticsText += '        message: \'' + error + '\',\n';
+            diagnosticsText += '        status: ' + json[error].status + ',\n';
+            diagnosticsText += '        code: ' + json[error].code + '\n';
+            diagnosticsText += '    }';
+            if (index < length - 1) {
+                diagnosticsText += ',\n';
             }
-            diagnosticsText += '\n';
-            diagnosticsText += '}';
-
-            file.contents = Buffer.concat([new Buffer(diagnosticsText)]);
+            index++;
         }
+        diagnosticsText += '\n';
+        diagnosticsText += '}\n\n';
+
+        diagnosticsText += 'export default diagnosticMessages;\n';
+
+        file.contents = Buffer.concat([new Buffer(diagnosticsText)]);
 
         this.push(file);
 
