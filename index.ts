@@ -45,7 +45,7 @@ export interface DiagnosticMessages {
         let length = Object.keys(json).length;
         let index = 0;
 
-        diagnosticsText += 'var diagnosticMessages: DiagnosticMessages = {\n';
+        diagnosticsText += 'export var Diagnostics: DiagnosticMessages = {\n';
         for (let message in json) {
             diagnosticsText += '    ' +
                 message.replace(/\s+/g, '_')
@@ -62,7 +62,7 @@ export interface DiagnosticMessages {
         }
         diagnosticsText += '}\n\n';
 
-        diagnosticsText += 'export default diagnosticMessages;\n';
+        diagnosticsText += 'export default Diagnostics;\n';
 
         file.contents = Buffer.concat([new Buffer(diagnosticsText)]);
 
