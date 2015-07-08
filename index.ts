@@ -28,7 +28,7 @@ export interface DiagnosticMessages {
     [diagnostic: string]: DiagnosticMessage;
 }\n\n`;
 
-    diagnosticsText += 'export interface DiagnosticMessage {';
+    diagnosticsText += 'export interface DiagnosticMessage {\n';
     diagnosticsText += '    message: string;\n';
     for (let i in props) {
         // Don't treat message.
