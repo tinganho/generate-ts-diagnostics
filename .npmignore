@@ -1,0 +1,10 @@
+
+
+.gitignore
+.gitattributes
+.editorconfig
+index.ts
+tsconfig.json
+tsd.json
+typings/
+
