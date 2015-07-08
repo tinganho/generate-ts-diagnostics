@@ -36,7 +36,7 @@ export interface DiagnosticMessages {
             props.splice(i, 1);
             continue;
         }
-        diagnosticsText += `    ${props[i].name}${props[i].optional ? '?' : ''}:${props[i].type};\n`;
+        diagnosticsText += `    ${props[i].name}${props[i].optional ? '?' : ''}: ${props[i].type};\n`;
     }
     diagnosticsText += '}\n\n';
 
