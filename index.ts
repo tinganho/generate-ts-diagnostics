@@ -28,17 +28,7 @@ export = function(props: MessageProperty[]) {
         let length = Object.keys(json).length;
         let index = 0;
 
-        let diagnosticsText = '\nexport interface DiagnosticMessages {\n';
-        for (let message in json) {
-            diagnosticsText += '    ' +
-                message.replace(/\s+/g, '_')
-                    .replace(/['"\.,]/g, '')
-                    .replace(/{(\d)}/g, '$1');
-            diagnosticsText += ': DiagnosticMessage;\n';
-        }
-        diagnosticsText += '    [diagnostic: string]: DiagnosticMessage;\n';
-        diagnosticsText += '}\n\n';
-
+        let diagnosticsText = '\n';
         diagnosticsText += 'export interface DiagnosticMessage {\n';
         diagnosticsText += '    message: string;\n';
         for (let i in props) {
@@ -52,7 +42,7 @@ export = function(props: MessageProperty[]) {
         diagnosticsText += '}\n\n';
 
 
-        diagnosticsText += 'export var Diagnostics: DiagnosticMessages = {\n';
+        diagnosticsText += 'export var Diagnostics = {\n';
         for (let message in json) {
             diagnosticsText += '    ' +
                 message.replace(/\s+/g, '_')
