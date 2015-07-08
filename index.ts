@@ -46,11 +46,12 @@ export = function(props: MessageProperty[]) {
         for (let message in json) {
             diagnosticsText += '    ' +
                 message.replace(/\s+/g, '_')
-                    .replace(/['"\.,]/g, '')
-                    .replace(/{(\d)}/g, '$1');
+                    .replace(/['"\.,\(\)\-]/g, '')
+                    .replace(/\+/g, 'plus')
+                    .replace(/\{(\d)\}/g, '$1');
 
             diagnosticsText += ': {\n';
-            diagnosticsText += '        message: \'' + message.replace(/(['"])/g, '\\$1') + '\',\n';
+            diagnosticsText += '        message: \'' + message.replace(/(['])/g, '\\$1') + '\',\n';
             for (let prop of props) {
                 diagnosticsText += `        ${prop.name}:  ${json[message][prop.name]},\n`;
             }
