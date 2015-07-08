@@ -29,7 +29,7 @@ export interface DiagnosticMessages {
 }\n\n`;
 
     diagnosticsText += 'export interface DiagnosticMessage {';
-    diagnosticsText += '    message: string';
+    diagnosticsText += '    message: string;\n';
     for (let i in props) {
         // Don't treat message.
         if (props[i].name === 'message') {
