@@ -14,7 +14,7 @@ interface Option {
     rootDir: string;
 }
 
-export = function(dest: any) {
+export default function(dest: any) {
     var stream = through.obj(function(file, encoding, next) {
         if (file.isBuffer()) {
             this.emit('error', new PluginError('gulp-prefixer', 'Buffers not supported!'));
