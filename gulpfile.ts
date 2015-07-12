@@ -14,15 +14,13 @@ var generateTsDiagnostics = require('./built/index');
 
 var diagnosticMessageProps = [
     {
-        name: 'status',
-        type: 'number',
-        optional: false,
-    },
-    {
         name: 'code',
         type: 'number',
-        optional: false,
     },
+    {
+        name: 'category',
+        type: 'string',
+    }
 ];
 
 gulp.task('generate-diagnostics', () => {

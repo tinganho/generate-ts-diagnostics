@@ -53,7 +53,12 @@ export = function(props: MessageProperty[]) {
             diagnosticsText += ': {\n';
             diagnosticsText += '        message: \'' + message.replace(/(['])/g, '\\$1') + '\',\n';
             for (let prop of props) {
-                diagnosticsText += `        ${prop.name}:  ${json[message][prop.name]},\n`;
+                if (json[message].type === 'number') {
+                    diagnosticsText += `        ${prop.name}: ${json[message][prop.name]},\n`;
+                }
+                else {
+                    diagnosticsText += `        ${prop.name}: '${json[message][prop.name]}',\n`;
+                }
             }
             diagnosticsText += '    },\n';
             index++;
